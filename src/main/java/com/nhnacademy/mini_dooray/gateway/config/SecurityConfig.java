@@ -1,6 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.config;
 
-import com.nhnacademy.mini_dooray.gateway.login.service.OAuth2GithubUserService;
+import com.nhnacademy.mini_dooray.gateway.auth.service.OAuth2GithubUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

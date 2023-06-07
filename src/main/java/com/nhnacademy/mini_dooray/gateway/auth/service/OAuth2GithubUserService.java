@@ -1,7 +1,7 @@
-package com.nhnacademy.mini_dooray.gateway.login.service;
+package com.nhnacademy.mini_dooray.gateway.auth.service;
 
-import com.nhnacademy.mini_dooray.gateway.login.model.GatewayUser;
-import com.nhnacademy.mini_dooray.gateway.login.model.GitEmailDto;
+import com.nhnacademy.mini_dooray.gateway.auth.model.GatewayUser;
+import com.nhnacademy.mini_dooray.gateway.auth.model.GitEmailDto;
 import com.nhnacademy.mini_dooray.gateway.util.RequestApiHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
