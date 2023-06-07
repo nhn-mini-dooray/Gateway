@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ApiUserDetailsService implements UserDetailsService {
@@ -21,13 +19,8 @@ public class ApiUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> accountOpt = memoryRepository.login(username);
-
-        if (accountOpt.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        Account account = accountOpt.get();
+        Account account = memoryRepository.login(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
         return new GatewayUser(account.getLoginId(), account.getPassword());
     }
