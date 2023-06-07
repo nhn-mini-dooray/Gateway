@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>로그인</h1>
+</body>
+<form action="/login" method="post">
+    <label for="loginId"> 아이디 : </label>
+    <input type="text" id="loginId" name="loginId" required>
+    <br>
+    <label for="password"> 비밀번호 : </label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="submit" value="제출">
+</form>
+<a href="/signUp">회원가입</a>
+<br>
+<a href="/oauth2/authorization/github">gitHub 로그인</a>
+</html>
