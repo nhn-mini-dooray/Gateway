@@ -22,18 +22,23 @@ import java.util.List;
 @PropertySource("classpath:application.properties")
 @RequiredArgsConstructor
 public class OAuth2GithubUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+    private static final String GIT_API_REQUEST_URL = "https://api.github.com/user/emails";
+    private static final String GIT_API_ACCEPT_HEADER = "application/vnd.github+json";
+    private static final String GIT_API_VERSION_HEADER = "X-GitHub-Api-Version";
+    private static final String GIT_API_VERSION_VALUE = "2022-11-28";
+
+    private final RequestApiHelper requestApiHelper;
 
     @Value("${github.token}")
     private String githubToken;
 
-    private final RequestApiHelper requestApiHelper;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         HttpHeaders headers = setHeader();
 
         List<GitEmailDto> response = requestApiHelper.getResponse(
-                "https://api.github.com/user/emails", HttpMethod.GET, headers,
+                GIT_API_REQUEST_URL, HttpMethod.GET, headers,
                 new ParameterizedTypeReference<>() {
                 });
 
@@ -46,9 +51,9 @@ public class OAuth2GithubUserService implements OAuth2UserService<OAuth2UserRequ
 
     private HttpHeaders setHeader() {
         HttpHeaders headers = requestApiHelper.getDefaultHeaders();
-        headers.setAccept(List.of(MediaType.valueOf("application/vnd.github+json")));
+        headers.setAccept(List.of(MediaType.valueOf(GIT_API_ACCEPT_HEADER)));
         headers.setBearerAuth(githubToken);
-        headers.set("X-GitHub-Api-Version", "2022-11-28");
+        headers.set(GIT_API_VERSION_HEADER, GIT_API_VERSION_VALUE);
         return headers;
     }
 
