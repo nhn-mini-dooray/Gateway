@@ -11,16 +11,16 @@ public class ControllerExceptionAdvice {
 
     @ExceptionHandler(HttpClientErrorException.class)
     public String httpClientErrorExceptionHandler(HttpClientErrorException exception, Model model) {
-        model.addAttribute("statusCode", exception.getStatusCode());
-        model.addAttribute("responseBody", exception.getResponseBodyAsString());
+        model.addAttribute("title", exception.getStatusCode());
+        model.addAttribute("body", exception.getResponseBodyAsString());
         return "error";
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public String internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException exception,
                                                                 Model model) {
-        model.addAttribute("statusCode", exception.getCause());
-        model.addAttribute("responseBody", exception.getMessage());
+        model.addAttribute("title", exception.getCause());
+        model.addAttribute("body", exception.getMessage());
         return "error";
     }
 }
