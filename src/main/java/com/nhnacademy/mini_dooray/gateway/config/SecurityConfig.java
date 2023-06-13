@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.config;
 
+import com.nhnacademy.mini_dooray.gateway.auth.handler.DaoFailureHandler;
 import com.nhnacademy.mini_dooray.gateway.auth.service.OAuth2GithubUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,15 +31,17 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .usernameParameter("loginId")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/");
+                .defaultSuccessUrl("/projects")
+                .failureHandler(new DaoFailureHandler());
 
         http
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
 
         http
                 .oauth2Login()
                 .loginPage("/login")
+                .defaultSuccessUrl("/projects")
                 .userInfoEndpoint()
                 .userService(oAuth2GithubUserService);
 
