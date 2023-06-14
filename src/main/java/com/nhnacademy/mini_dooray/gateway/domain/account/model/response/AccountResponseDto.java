@@ -1,17 +1,15 @@
-package com.nhnacademy.mini_dooray.gateway.domain.account.model;
+package com.nhnacademy.mini_dooray.gateway.domain.account.model.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Account {
+public class AccountResponseDto {
     private final String loginId;
 
-    private final String email;
+    private final Long accountId;
 
-    @Setter
-    private String password;
+    private final String password;
 }

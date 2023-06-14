@@ -2,11 +2,7 @@ package com.nhnacademy.mini_dooray.gateway.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,28 +20,28 @@ public class RequestApiHelper {
         return httpHeaders;
     }
 
-    public <T, R> R getResponse(String url, HttpMethod method, HttpHeaders headers, T requestBody,
+    public <T, R> R sendRequest(String url, HttpMethod method, HttpHeaders headers, T requestBody,
                                 ParameterizedTypeReference<R> reference) {
         HttpEntity<T> requestEntity = new HttpEntity<>(requestBody, headers);
         return getBody(url, method, requestEntity, reference);
     }
 
-    public <R> R getResponse(String url, HttpMethod method, HttpHeaders headers,
+    public <R> R sendRequest(String url, HttpMethod method, HttpHeaders headers,
                              ParameterizedTypeReference<R> reference) {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         return getBody(url, method, requestEntity, reference);
     }
 
-    public <T, R> R getResponse(String url, HttpMethod method, T requestBody, ParameterizedTypeReference<R> reference) {
-        return getResponse(url, method, getDefaultHeaders(), requestBody, reference);
+    public <T, R> R sendRequest(String url, HttpMethod method, T requestBody, ParameterizedTypeReference<R> reference) {
+        return sendRequest(url, method, getDefaultHeaders(), requestBody, reference);
     }
 
-    public <R> R getResponse(String url, HttpMethod method, ParameterizedTypeReference<R> reference) {
-        return getResponse(url, method, getDefaultHeaders(), reference);
+    public <R> R sendRequest(String url, HttpMethod method, ParameterizedTypeReference<R> reference) {
+        return sendRequest(url, method, getDefaultHeaders(), reference);
     }
 
     private <T, R> R getBody(String url, HttpMethod method, HttpEntity<T> requestEntity,
-                             ParameterizedTypeReference<R> reference) {
+                                             ParameterizedTypeReference<R> reference) {
         ResponseEntity<R> exchange = restTemplate.exchange(
                 url,
                 method,

@@ -1,7 +1,7 @@
 package com.nhnacademy.mini_dooray.gateway.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.mini_dooray.gateway.config_properties.RedisConfigProperties;
+import com.nhnacademy.mini_dooray.gateway.properties.RedisProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.context.annotation.Bean;
@@ -27,17 +27,17 @@ public class RedisConfig implements BeanClassLoaderAware {
     private static final int HOUR = 60 * MINUTE;
     private static final int DAY = 24 * HOUR;
 
-    private final RedisConfigProperties redisConfigProperties;
+    private final RedisProperties redisProperties;
 
     private ClassLoader classLoader;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName(redisConfigProperties.getHost());
-        configuration.setPort(redisConfigProperties.getPort());
-        configuration.setPassword(redisConfigProperties.getPassword());
-        configuration.setDatabase(redisConfigProperties.getDatabase());
+        configuration.setHostName(redisProperties.getHost());
+        configuration.setPort(redisProperties.getPort());
+        configuration.setPassword(redisProperties.getPassword());
+        configuration.setDatabase(redisProperties.getDatabase());
 
         return new LettuceConnectionFactory(configuration);
     }

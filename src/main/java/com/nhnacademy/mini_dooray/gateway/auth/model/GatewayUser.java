@@ -10,7 +10,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -20,22 +23,24 @@ import java.util.*;
 public class GatewayUser implements UserDetails, OAuth2User {
     private String username;
     private String password;
+    private Long accountId;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
     private List<GrantedAuthority> authorities;
-    private Map<String, Object> attributes;
+    private transient Map<String, Object> attributes;
 
-    public GatewayUser(String username, String password) {
+    public GatewayUser(String username, String password, Long accountId) {
         this.username = username;
         this.password = password;
+        this.accountId = accountId;
+        attributes = new HashMap<>();
         accountNonExpired = true;
         accountNonLocked = true;
         credentialsNonExpired = true;
         enabled = true;
         authorities = new ArrayList<>();
-        attributes = new HashMap<>();
     }
 
     @Override
