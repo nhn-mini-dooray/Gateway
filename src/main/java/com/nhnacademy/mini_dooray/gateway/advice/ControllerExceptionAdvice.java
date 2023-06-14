@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.advice;
 
+import com.nhnacademy.mini_dooray.exception.ValidationFailedException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,8 +17,10 @@ public class ControllerExceptionAdvice {
         return "error";
     }
 
-    @ExceptionHandler(InternalAuthenticationServiceException.class)
-    public String internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException exception,
+    @ExceptionHandler(value = {
+            InternalAuthenticationServiceException.class,
+            ValidationFailedException.class })
+    public String internalAuthenticationServiceExceptionHandler(Exception exception,
                                                                 Model model) {
         model.addAttribute("title", exception.getCause());
         model.addAttribute("body", exception.getMessage());
